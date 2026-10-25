@@ -1331,7 +1331,7 @@
   function lifePost(p,state,s){const card=h('article','life-post');const top=h('div','life-post-head');const avatar=lifeAvatar(p,'life-avatar');
     append(top,avatar,append(h('div','life-post-person'),h('strong','',p.name),h('small','','@'+p.handle+' · '+LIFE_TOPICS.find(t=>t[0]===p.topic)[1])),h('span','life-bot-label',p.demo?'Демо · '+p.gender:'Моё'));top.addEventListener('click',()=>{lifeProfileId=p.id;lifeView='profile';render();});card.append(top);
     let slide=0;const frame=h('div','life-frame');const count=h('span','life-counter','1 / '+p.count);const draw=()=>{frame.querySelector('.life-photo')?.remove();frame.prepend(lifePhoto(p,slide));count.textContent=(slide+1)+' / '+p.count;};frame.append(count);draw();
-    if(p.count>1){const controls=h('div','life-slide-controls');append(controls,btn('‹','life-arrow',()=>{slide=(slide+p.count-1)%p.count;draw();}),btn('›','life-arrow',()=>{slide=(slide+1)%p.count;draw();}));frame.append(controls);}
+    if(p.count>1){let startX=0;frame.addEventListener('touchstart',e=>{startX=e.touches[0]?.clientX||0;},{passive:true});frame.addEventListener('touchend',e=>{const delta=(e.changedTouches[0]?.clientX||0)-startX;if(Math.abs(delta)>55){slide=(slide+(delta<0?1:p.count-1))%p.count;draw();}},{passive:true});}
     card.append(frame);const key='like_'+p.id;const actions=h('div','life-actions');append(actions,btn(state[key]?'♥ Нравится':'♡ Нравится','btn-outline',()=>{const d=lifeRead();d[key]=!d[key];lifeWrite(d);render();}),btn('💬 Комментарии','btn-outline',()=>{const d=lifeRead();const key='comments_'+p.id;const message=prompt('Ваш комментарий (демо, виден только вам)');if(message&&message.trim()){d[key]=[...(d[key]||[]),message.trim().slice(0,300)];lifeWrite(d);render();}}),btn(state['saved_'+p.id]?'🔖 Сохранено':'♧ Сохранить','btn-outline',()=>{const d=lifeRead();d['saved_'+p.id]=!d['saved_'+p.id];lifeWrite(d);render();}),btn('↗ Переслать','btn-outline',()=>{const message='СЕЙФ Life · '+p.name+' — '+p.caption;if(navigator.share){navigator.share({title:'СЕЙФ Life',text:message}).catch(()=>{});}else if(navigator.clipboard){navigator.clipboard.writeText(message).then(()=>toast('Текст скопирован')).catch(()=>toast('Не удалось поделиться'));}else toast('Поделиться пока недоступно');}));
     append(card,actions,h('p','life-caption',p.caption));(state['comments_'+p.id]||[]).forEach(c=>card.append(h('p','life-user-comment','💬 '+c)));s.append(card);}
   async function lifeCompress(file){return new Promise((resolve,reject)=>{const im=new Image(),url=URL.createObjectURL(file);im.onload=()=>{try{const canvas=document.createElement('canvas'),scale=Math.min(1,900/Math.max(im.width,im.height));canvas.width=Math.max(1,Math.round(im.width*scale));canvas.height=Math.max(1,Math.round(im.height*scale));canvas.getContext('2d').drawImage(im,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',.68));}catch(e){reject(e);}finally{URL.revokeObjectURL(url);}};im.onerror=()=>{URL.revokeObjectURL(url);reject(Error('Не удалось прочитать фото'));};im.src=url;});}
@@ -1350,23 +1350,31 @@
     if(lifeView==='create'){s.append(h('h2','','Новая публикация'));lifeCreate(s);lifeBottom(s);return;}
     if(lifeView==='mine'){lifeProfile({id:'mine',name:state.name||'Мой профиль',handle:'my_life',avatar:state.avatar,topic:'travel'},state,s,true);lifeBottom(s);return;}
     if(lifeView==='profile'){const p=people.find(x=>x.id===lifeProfileId);if(!p){lifeView='feed';render();return;}lifeProfile(p,state,s,false);lifeBottom(s);return;}
-    const welcome=h('div','life-welcome');append(welcome,h('strong','','Вдохновение на сегодня'),h('span','','50 демо-профилей · 7 интересов · по 3 фото'));s.append(welcome);
-    const filters=h('div','life-filters');for(const [id,label] of LIFE_TOPICS){filters.append(btn(label,'life-chip'+(lifeTopic===id?' selected':''),()=>{lifeTopic=id;lifePage=0;render();}));}s.append(filters);
+    const stories=h('div','life-stories');
+    const mineStory=h('button','life-story life-story-own');mineStory.type='button';mineStory.append(h('span','life-story-ring life-story-add','＋'),h('small','','Ваша история'));mineStory.addEventListener('click',()=>{lifeView='create';render();});stories.append(mineStory);
+    for(const [id,label] of [['wardrobe','Гардероб'],['food','Еда'],['sport','Спорт'],['beauty','Красота'],['travel','Путешествия'],['health','Здоровье']]){
+      const b=h('button','life-story'+(lifeTopic===id?' chosen':''));b.type='button';const ring=h('span','life-story-ring');const img=document.createElement('img');img.loading='lazy';img.alt=label;img.src='https://images.unsplash.com/'+LIFE_PHOTOS[id][0]+'?auto=format&fit=crop&w=140&q=65';ring.append(img);b.append(ring,h('small','',label));b.addEventListener('click',()=>{lifeTopic=lifeTopic===id?'all':id;lifePage=0;render();});stories.append(b);
+    }s.append(stories);
     const filtered=[...myPosts,...people].filter(p=>lifeTopic==='all'||p.topic===lifeTopic);const visible=filtered.slice(0,(lifePage+1)*10);visible.forEach(p=>lifePost(p,state,s));if(visible.length<filtered.length)s.append(btn('Показать ещё','btn-outline full',()=>{lifePage++;render();}));
     s.append(h('p','daily-footer-note','Демонстрационные персонажи — вымышленные. Лайки, комментарии и сохранения работают только на этом устройстве.'));lifeBottom(s);
   }
   function lifeBottom(s){const bar=h('nav','life-bottom');append(bar,btn('⌂\nЛента','life-tab'+(lifeView==='feed'?' active':''),()=>{lifeView='feed';render();}),btn('⌕\nПоиск','life-tab'+(lifeView==='search'?' active':''),()=>{lifeView='search';render();}),btn('＋','life-tab life-add',()=>{lifeView='create';render();}),btn('♧\nДрузья','life-tab'+(lifeView==='friends'?' active':''),()=>{lifeView='friends';render();}),btn('◯\nПрофиль','life-tab'+(lifeView==='mine'?' active':''),()=>{lifeView='mine';render();}));s.append(bar);}
   function renderDashboard(){
-    const s=shell();s.classList.add('seif-original-home');
+    const s=shell();s.classList.add('seif-daily-home');
     s.append(dailyCardStories());
-    const expense=btn('','original-expense-banner',()=>go('expenses'));
-    append(expense,h('span','original-expense-icon','↗'),append(h('span','original-banner-copy'),h('small','','КАЖДЫЙ ДЕНЬ'),h('strong','','Мои расходы'),h('span','','Внести за секунду · история · аналитика')),append(h('span','original-expense-total'),h('small','','ЗА МЕСЯЦ'),h('strong','','0 ₽')));
-    s.append(expense);
-    s.append(h('p','original-small-note','Дополнительный модуль · тестирование бесплатно · оплата не подключена.'));
-    const rhythm=btn('','original-rhythm-banner',()=>go('rhythm'));
-    append(rhythm,h('span','original-rhythm-icon','◇'),append(h('span','original-banner-copy'),h('small','','МОЁ ПРОСТРАНСТВО'),h('strong','','Мой ритм'),h('span','','Лента · стиль · спорт · поездки')),h('span','original-arrow','↗'));s.append(rhythm);
-    const life=h('section','original-life-panel');append(life,h('h2','','Сейф Life · твоя лента'),h('p','','50 вымышленных демо-профилей · стиль, отдых, красота, спорт и жизнь'),btn('Открыть Сейф Life →','btn-primary',()=>{lifeView='feed';lifeTopic='all';go('life');}));s.append(life);
-    const links=h('div','original-home-links');for(const [name,dest] of [['▣ Важный документ','documents'],['＋ Добавить документ','documents'],['▤ Все карты','cards'],['⌘ Мои пароли','home'],['◷ Важные даты','reminders'],['⚙ Настройки','settings']])links.append(btn(name,'original-home-link',()=>go(dest)));s.append(links);
+    s.append(expensesDashboardTile());
+    s.append(rhythmDashboardTile());
+    const life= h('section','seif-life-launch-section');
+    const lifeButton=h('button','seif-life-launch');lifeButton.type='button';
+    append(lifeButton,h('span','seif-life-launch-symbol','♡'),append(h('span','seif-life-launch-copy'),h('small','','ТВОЯ СОЦИАЛЬНАЯ СЕТЬ'),h('strong','','Сейф Life'),h('span','','Лента · фотографии · друзья')),h('span','seif-life-launch-arrow','↗'));
+    lifeButton.addEventListener('click',()=>{lifeView='feed';lifeTopic='all';go('life');});life.append(lifeButton);s.append(life);
+    const favorites=dailyOtherFavorites();if(favorites)s.append(favorites);
+    const manage=h('section','seif-home-personalize');
+    append(manage,h('h2','','Моя главная — мои правила'),h('p','','Добавляйте в избранное пароли, заметки, важные документы, фотографии и даты. Они появятся здесь.'),btn('★ Настроить главную','btn-outline',()=>go('favorites')));
+    s.append(manage);
+    const actions=h('div','seif-home-shortcuts');
+    append(actions,btn('＋ Пароль','btn-outline',()=>go('new')),btn('＋ Документ','btn-outline',()=>go('documents')),btn('＋ Заметка','btn-outline',()=>go('notes')));
+    s.append(actions);
   }
   function renderLoyaltyCollection(){
     const s=shell();const count=extras.cards.length;

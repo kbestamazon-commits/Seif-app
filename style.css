@@ -524,19 +524,86 @@ body:has(.seif-premium-home){background:#0c1116!important;color:#f4f0e8!importan
 .life-screen .life-topline button{color:#202a2e!important}
 
 .life-friends-count{padding:8px 16px;color:#526374;font-size:14px}.life-screen .life-bottom{z-index:200}
-/* Restored approved navy dashboard; Life stays independently light. */
-body:has(.seif-original-home){background:radial-gradient(ellipse at 50% 0%,#1c3968 0%,#111a35 45%,#0b1026 100%)!important;color:#f4f8ff!important}
-.seif-original-home{max-width:720px;background:transparent!important;color:#f4f8ff!important;padding-bottom:85px}
-.seif-original-home .topbar,.seif-original-home .primary-nav{display:flex!important}
-.seif-original-home .primary-nav{display:flex!important}
-.seif-original-home .daily-stories-section{margin-top:15px}
-.seif-original-home .daily-stories-header{margin-bottom:25px}
-.seif-original-home .daily-title{font-size:clamp(29px,6vw,39px);color:#fff}
-.seif-original-home .daily-sub{color:#acbdd8}
-.seif-original-home .daily-stories{height:min(96vw,580px,66dvh);border-radius:29px}
-.seif-original-home .daily-story-card{border-radius:29px;box-shadow:0 18px 48px #03091666}
-.seif-original-home .daily-story-magnit{background:linear-gradient(130deg,#ff694b,#fb2467)!important}
-.original-expense-banner,.original-rhythm-banner{width:100%;display:flex;align-items:center;gap:16px;text-align:left;color:#fff;border-radius:27px;padding:24px 20px;margin:28px 0 8px;min-height:140px;border:1px solid #8baf6d;background:linear-gradient(120deg,#25323c,#193c49)}
-.original-expense-icon{flex:0 0 66px;height:66px;border-radius:19px;display:grid;place-items:center;background:#c5fa6c;color:#182b30;font-size:43px;font-weight:800}
-.original-banner-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}.original-banner-copy small{font-size:11px;letter-spacing:.2em;color:#bceba2;font-weight:800}.original-banner-copy strong{font-size:27px;letter-spacing:-.04em}.original-banner-copy>span{font-size:13px;color:#b9c9d3}.original-expense-total{text-align:right;display:flex;flex-direction:column;gap:5px}.original-expense-total small{font-size:9px;letter-spacing:.13em;color:#c7d5d4}.original-expense-total strong{font-size:19px;color:#c6fa77}.original-small-note{font-size:12px;color:#8997b0;margin:10px 8px 28px}.original-rhythm-banner{border-color:#668e89;background:linear-gradient(120deg,#203847,#416c69);margin:20px 0 30px}.original-rhythm-icon{flex:0 0 76px;height:76px;border-radius:23px;background:#ffffff22;display:grid;place-items:center;font-size:44px}.original-rhythm-banner .original-banner-copy small{color:#eac7e5}.original-arrow{font-size:35px}.original-life-panel{padding:27px 25px;background:#1c2841;border:1px solid #35425c;border-radius:27px;margin:0 0 25px}.original-life-panel h2{font-size:27px;margin:0 0 20px}.original-life-panel p{color:#b5c0d7;font-size:17px;line-height:1.5;margin:0 0 23px}.original-life-panel .btn{font-size:18px}.original-home-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.original-home-link{min-height:80px;border-radius:18px;border:1px solid #34445f;background:#14223b;color:#f4f9ff;font-size:16px;font-weight:750;padding:14px}.original-home-link:nth-child(even){background:linear-gradient(115deg,#a5f7e2,#73c8f5);color:#14243d}
-@media(max-width:420px){.original-expense-banner,.original-rhythm-banner{gap:11px;padding:17px 12px;min-height:125px}.original-expense-icon{flex-basis:53px;height:55px;font-size:33px}.original-rhythm-icon{flex-basis:57px;height:60px;font-size:33px}.original-banner-copy strong{font-size:23px}.original-banner-copy>span{font-size:11px}.original-expense-total strong{font-size:15px}.original-life-panel h2{font-size:24px}}
+
+/* SAFE compact mobile layout — approved horizontal module sizes */
+@media(max-width:600px){
+ .expenses-launch-area,.rh-launch-section{margin:12px 0 17px!important}
+ .expenses-launch,.rh-launch{min-height:98px!important;padding:13px 14px!important;gap:12px!important;border-radius:22px!important;box-shadow:none!important}
+ .expenses-launch-icon,.rh-launch-symbol{width:54px!important;height:54px!important;flex:0 0 54px!important;border-radius:15px!important;font-size:30px!important}
+ .expenses-launch-copy strong,.rh-launch-content strong{font-size:23px!important;line-height:1.15!important}
+ .expenses-launch-copy small,.rh-launch-content span{font-size:11px!important;line-height:1.3!important}
+ .rh-launch-arrow{font-size:23px!important}
+ .expense-shell{padding:calc(env(safe-area-inset-top,0px) + 14px) 15px calc(env(safe-area-inset-bottom,0px) + 70px)!important}
+ .expense-header{margin-bottom:18px!important}
+ .expense-logo{width:43px!important;height:43px!important;font-size:29px!important}
+ .expense-back{min-height:43px!important}
+ .expense-intro{margin-bottom:14px!important}
+ .expense-title{font-size:29px!important;margin-bottom:10px!important}
+ .expense-kpis{gap:9px!important;margin-bottom:12px!important}
+ .expense-kpi{min-height:115px!important;padding:15px 13px!important;gap:5px!important;border-radius:19px!important}
+ .expense-kpi strong{font-size:23px!important;margin:2px 0!important}
+ .expense-kpi span{font-size:12px!important}.expense-kpi small{font-size:11px!important}
+ .expense-breakdown{padding:15px!important;margin-bottom:15px!important;border-radius:18px!important}
+ .expense-form{padding:17px 15px!important;margin:14px 0 20px!important;border-radius:21px!important}
+ .expense-amount{font-size:52px!important;margin:12px 0 16px!important;line-height:1.15!important}
+ .expense-category-select{min-height:46px!important;padding:11px!important;font-size:15px!important}
+ .rh-page-head{margin:7px 0 13px!important}.rh-page-head h1{font-size:30px!important;margin:5px 0!important}.rh-page-head p{font-size:12px!important}
+ .rh-hero{min-height:145px!important;padding:17px!important;border-radius:22px!important;box-shadow:none!important}
+ .rh-hero h2{font-size:26px!important;margin:9px 0 6px!important}.rh-hero p{font-size:12px!important;margin-bottom:9px!important}
+ .rh-section-heading{font-size:18px!important;margin:17px 0 10px!important}
+ .rh-grid{gap:9px!important}.rh-section-card{min-height:122px!important;padding:11px!important;border-radius:18px!important;gap:4px!important}
+ .rh-section-icon{width:39px!important;height:39px!important;font-size:22px!important;border-radius:12px!important}
+ .rh-section-card strong{font-size:13px!important}.rh-section-card small{font-size:10px!important}
+ .rh-panel{padding:14px!important;margin:12px 0!important;border-radius:18px!important}
+}
+/* Approved SAFE Life dark social feed and two-column profile */
+.life-screen{--bg:#071327!important;--text:#fff!important;--muted:#9eafc8!important;background:#071327!important;color:#fff!important;box-shadow:0 0 0 100vmax #071327!important}
+.life-screen .life-topline,.life-screen .life-bottom{background:#071327!important;color:#fff!important;border-color:#1a3154!important}
+.life-screen .life-post{background:#0b1a32!important;color:#fff!important;border-color:#183353!important}
+.life-screen .life-chip{background:#17243e!important;color:#fff!important;border-color:#344566!important}
+.life-screen .life-chip.selected{background:#247bf5!important;color:#fff!important;border-color:#247bf5!important}
+.life-screen .life-actions button{color:#fff!important}
+.life-screen .life-profile-card,.life-screen .life-compose,.life-screen .life-search,.life-screen .life-direct{background:#08172e!important;color:#fff!important}
+.life-screen .life-caption,.life-screen .life-user-comment,.life-screen .life-demo-hint{color:#c0cce1!important}
+.life-screen .life-tab{color:#aab8d0!important}.life-screen .life-tab.active{color:#51a5ff!important}
+.life-screen .life-photo{height:min(128vw,76dvh)!important;min-height:400px!important}
+.life-screen .life-slide-controls{display:none!important}
+.life-screen .life-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:3px!important}
+.life-screen .life-profile-primary{background:#1878ef!important;color:#fff!important}
+.life-screen .life-profile-secondary{background:#101d36!important;color:#fff!important;border-color:#2776ce!important}
+
+/* Approved home: large vertically swipeable cards, three compact module tiles, favorites below. */
+.seif-daily-home .daily-stories{height:min(89vw,440px,57dvh)!important;overflow-y:auto!important;overflow-x:hidden!important;scroll-snap-type:y mandatory!important;display:flex!important;flex-direction:column!important}
+.seif-daily-home .daily-story-card{flex:0 0 100%!important;min-height:100%!important;scroll-snap-align:start!important}
+.seif-daily-home .expenses-launch-area,.seif-daily-home .rh-launch-section,.seif-daily-home .seif-life-launch-section{margin:12px 0!important}
+.seif-daily-home .expenses-launch,.seif-daily-home .rh-launch,.seif-daily-home .seif-life-launch{min-height:88px!important;padding:12px 15px!important;border-radius:22px!important;box-shadow:none!important}
+.seif-daily-home .expenses-launch-icon,.seif-daily-home .rh-launch-symbol{width:53px!important;height:53px!important;flex:0 0 53px!important}
+.seif-life-launch{width:100%;display:flex;align-items:center;gap:14px;border:1px solid #526c91;border-radius:22px;background:linear-gradient(120deg,#1d2945,#203451);color:#fff;text-align:left}
+.seif-life-launch-symbol{width:53px;height:53px;flex:0 0 53px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(130deg,#91f1de,#6dbff5);color:#11243b;font-size:32px}
+.seif-life-launch-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}.seif-life-launch-copy small{color:#9fe4e6;font-size:10px;font-weight:800;letter-spacing:.12em}.seif-life-launch-copy strong{font-size:23px}.seif-life-launch-copy span{font-size:11px;color:#b5c8df}.seif-life-launch-arrow{font-size:26px}
+.seif-home-personalize{margin:20px 0 12px;padding:17px;border:1px solid #455673;border-radius:20px;background:#18243d}.seif-home-personalize h2{font-size:19px;margin:0 0 8px}.seif-home-personalize p{font-size:13px;color:#bdc9df;line-height:1.45;margin:0 0 14px}.seif-home-shortcuts{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 26px}
+
+/* 25 October: polish only Life; expenses/rhythm internal functionality untouched */
+.life-screen .life-topline{padding:12px 16px!important;background:#061329!important}
+.life-screen .life-wordmark{font-size:24px!important;color:#f7faff!important;letter-spacing:-.5px!important}
+.life-screen .life-stories{display:flex;gap:13px;overflow-x:auto;padding:14px 14px 18px;scrollbar-width:none;border-bottom:1px solid #1d3153}
+.life-screen .life-story{background:none;border:0;min-width:69px;width:69px;flex:0 0 69px;padding:0;color:#f1f6ff;display:flex;align-items:center;flex-direction:column;gap:6px}
+.life-screen .life-story-ring{width:62px;height:62px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#ff9b44,#fa397f,#783eff,#2588f9);display:grid;place-items:center;overflow:hidden}
+.life-screen .life-story-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #061329;box-sizing:border-box}
+.life-screen .life-story-add{font-size:34px;font-weight:300;background:#102445;border:2px solid #2787f7;color:#56b2ff}
+.life-screen .life-story small{font-size:10px;white-space:nowrap;max-width:75px;overflow:hidden;text-overflow:ellipsis}
+.life-screen .life-story.chosen .life-story-ring{box-shadow:0 0 0 2px #5da8ff}
+.life-screen .life-post{margin:0 0 12px!important;border-radius:0!important;background:#071327!important}
+.life-screen .life-post-head{margin:0!important;padding:10px 14px!important}
+.life-screen .life-frame{border-radius:0!important}
+.life-screen .life-photo{height:min(142vw,78dvh)!important;min-height:380px!important}
+.life-screen .life-counter{background:#0b1b35b8}
+.life-screen .life-actions{padding:8px 10px!important;gap:3px!important;flex-wrap:nowrap!important;overflow-x:auto}
+.life-screen .life-actions button{font-size:11px!important;padding:8px 5px!important;white-space:nowrap!important}
+.life-screen .life-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:3px!important}
+.life-screen .life-profile-avatar{border:3px solid #ff4f8d!important;box-shadow:0 0 0 2px #408bff}
+.life-screen .life-profile-card{padding:16px 14px!important}
+.life-screen .life-profile-stats{margin:15px 0!important}
+.life-screen .life-profile-controls{gap:6px!important}
+.life-screen .life-profile-controls button{min-width:0!important;font-size:11px!important}
+.life-screen .life-bottom{background:#061329!important;border-top:1px solid #254269!important}
