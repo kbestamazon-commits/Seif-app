@@ -1357,34 +1357,16 @@
   }
   function lifeBottom(s){const bar=h('nav','life-bottom');append(bar,btn('⌂\nЛента','life-tab'+(lifeView==='feed'?' active':''),()=>{lifeView='feed';render();}),btn('⌕\nПоиск','life-tab'+(lifeView==='search'?' active':''),()=>{lifeView='search';render();}),btn('＋','life-tab life-add',()=>{lifeView='create';render();}),btn('♧\nДрузья','life-tab'+(lifeView==='friends'?' active':''),()=>{lifeView='friends';render();}),btn('◯\nПрофиль','life-tab'+(lifeView==='mine'?' active':''),()=>{lifeView='mine';render();}));s.append(bar);}
   function renderDashboard(){
-    const s=shell();s.classList.add('seif-hub','seif-hub-expanded','seif-classic-home');
-    const hero=h('div','seif-hub-hero');append(hero,h('div','seif-hub-shield','◇'),h('h1','','СЕЙФ'),h('p','','Моё пространство. Мои правила.'));s.append(hero);
-    // The original, prominent loyalty-card section remains at the top of the home screen.
-    const cards=h('section','hub-featured-cards');
-    append(cards,append(h('div','hub-section-head'),h('h2','','Моя главная карта'),btn('Все карты →','hub-text-action',()=>go('cards'))));
-    if(extras.cards.length){const chosen=[...extras.cards].sort(cardRank)[0];cards.append(cardAccessTile(chosen,true));
-      cards.append(h('p','hub-helper','Нажмите на карту, чтобы показать её на кассе.'));}
-    else{const empty=btn('','hub-card-placeholder',()=>addLoyaltyFromBrand('other'));
-      append(empty,h('span','hub-card-symbol','▤'),h('strong','','Добавить большую карту'),h('small','','Скидочная карта всегда под рукой'),h('span','','＋ Добавить карту'));cards.append(empty);}
-    s.append(cards);
-    const pass=h('section','hub-passwords');
-    append(pass,append(h('div','hub-section-head'),h('h2','','Мои пароли'),btn('Все пароли →','hub-text-action',()=>go('home'))));
-    const recent=[...entries].sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).slice(0,3);
-    if(recent.length){for(const item of recent){const info=serviceInfo(item.serviceId);const row=btn('','hub-password-row',()=>go('detail:'+item.id));append(row,serviceIcon(item.serviceId),append(h('span','hub-password-name'),h('strong','',item.name||info[1]),h('small','','Защищённая запись')),h('span','','›'));pass.append(row);}}
-    else{pass.append(btn('＋ Добавить первый пароль','hub-password-empty',()=>go('new')));}
-    s.append(pass);
-    s.append(h('h2','hub-modules-title','Мои пространства'));
-    const tiles=h('div','seif-hub-grid');
-    for(const [icon,title,sub,dest] of [['♙','Мой сейф','Пароли, документы, личное','home'],['▣','Мои расходы','Финансы и платежи','expenses'],['♡','Мой ритм','Привычки, здоровье, жизнь','rhythm'],['♧','Сейф Life','Лента, друзья, фотографии','life']]){
-      const t=btn('','seif-hub-tile',()=>{if(dest==='life'){lifeView='feed';lifeTopic='all';}go(dest);});append(t,h('span','hub-icon',icon),h('strong','',title),h('small','',sub));tiles.append(t);
-    }s.append(tiles);
-    const extra=h('section','classic-home-extras');
-    extra.append(h('h2','hub-modules-title','Ещё в СЕЙФЕ'));
-    const extraTiles=h('div','seif-hub-grid');
-    for(const [ico,name,desc,dest] of [['▤','Все карты','Магазины и коды','cards'],['▣','Мои документы','Важные файлы и фотографии','documents'],['◷','Важные даты','Напоминания и события','reminders'],['⚙','Настройки и сценарии','Мужской, женский, нейтральный','settings']]){
-      const t=btn('','seif-hub-tile',()=>go(dest));append(t,h('span','hub-icon',ico),h('strong','',name),h('small','',desc));extraTiles.append(t);
-    }extra.append(extraTiles);s.append(extra);
-    s.append(h('p','hub-note','Главная карта → пароли → четыре пространства. Личные данные никогда не публикуются автоматически.'));
+    const s=shell();s.classList.add('seif-original-home');
+    s.append(dailyCardStories());
+    const expense=btn('','original-expense-banner',()=>go('expenses'));
+    append(expense,h('span','original-expense-icon','↗'),append(h('span','original-banner-copy'),h('small','','КАЖДЫЙ ДЕНЬ'),h('strong','','Мои расходы'),h('span','','Внести за секунду · история · аналитика')),append(h('span','original-expense-total'),h('small','','ЗА МЕСЯЦ'),h('strong','','0 ₽')));
+    s.append(expense);
+    s.append(h('p','original-small-note','Дополнительный модуль · тестирование бесплатно · оплата не подключена.'));
+    const rhythm=btn('','original-rhythm-banner',()=>go('rhythm'));
+    append(rhythm,h('span','original-rhythm-icon','◇'),append(h('span','original-banner-copy'),h('small','','МОЁ ПРОСТРАНСТВО'),h('strong','','Мой ритм'),h('span','','Лента · стиль · спорт · поездки')),h('span','original-arrow','↗'));s.append(rhythm);
+    const life=h('section','original-life-panel');append(life,h('h2','','Сейф Life · твоя лента'),h('p','','50 вымышленных демо-профилей · стиль, отдых, красота, спорт и жизнь'),btn('Открыть Сейф Life →','btn-primary',()=>{lifeView='feed';lifeTopic='all';go('life');}));s.append(life);
+    const links=h('div','original-home-links');for(const [name,dest] of [['▣ Важный документ','documents'],['＋ Добавить документ','documents'],['▤ Все карты','cards'],['⌘ Мои пароли','home'],['◷ Важные даты','reminders'],['⚙ Настройки','settings']])links.append(btn(name,'original-home-link',()=>go(dest)));s.append(links);
   }
   function renderLoyaltyCollection(){
     const s=shell();const count=extras.cards.length;
