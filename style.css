@@ -506,3 +506,21 @@ body:has(.seif-premium-home){background:#0c1116!important;color:#f4f0e8!importan
 .seif-premium-home .seif-hub-tile small{color:#aab5b7!important}
 .seif-premium-home .hub-icon{color:#e1be8c!important}
 .seif-premium-home .hub-note{color:#8f9b9f!important;text-align:center!important;margin-top:28px!important}
+/* SEIF Life: independent light social space */
+.life-screen{--bg:#fafaf8;--text:#22272a;--muted:#737d80;background:#fafaf8!important;color:#22272a!important;box-shadow:0 0 0 100vmax #fafaf8!important}
+.life-screen .life-topline,.life-screen .life-bottom{background:#fff!important;color:#202a2e!important;border-color:#e7e9e9!important}
+.life-screen .life-post{background:#fff!important;color:#202a2e!important;border-bottom:1px solid #eceeed!important}
+.life-screen .life-chip{background:#f0f3f1!important;color:#344344!important;border-color:#e3e8e6!important}
+.life-screen .life-chip.selected{background:#ccebe3!important;color:#174e48!important;border-color:#b2dacf!important}
+.life-screen .life-actions button{background:transparent!important;color:#202a2e!important;border:0!important;font-size:13px!important}
+.life-screen .life-profile-card,.life-screen .life-compose{background:#fff!important;color:#202a2e!important}
+.life-screen .life-caption,.life-screen .life-user-comment,.life-screen .life-demo-hint{color:#475358!important}
+.life-screen .life-tab{color:#39474a!important}.life-screen .life-tab.active{color:#007e76!important}
+.life-screen .life-search,.life-screen .life-direct{padding:18px;background:#fff;color:#202a2e;min-height:65vh}
+.life-screen .life-message-input{display:block;width:100%;padding:14px;margin:15px 0;border:1px solid #d7dfdd;border-radius:14px;background:#f7f9f8;color:#202a2e;font-size:16px;box-sizing:border-box}
+.life-screen .life-search-person{display:flex;align-items:center;gap:14px;width:100%;text-align:left;margin:5px 0;padding:9px;background:#fff;color:#202a2e;border:0;border-bottom:1px solid #edf0ef}
+.life-screen .life-message{padding:12px 16px;background:#e2f5ef;border-radius:18px;margin:10px 0 10px auto;max-width:85%;overflow-wrap:anywhere}
+.life-screen .life-profile-info,.life-screen .life-profile-stats,.life-screen .life-welcome{color:#202a2e!important}
+.life-screen .life-topline button{color:#202a2e!important}
+
+.life-friends-count{padding:8px 16px;color:#526374;font-size:14px}.life-screen .life-bottom{z-index:200}
